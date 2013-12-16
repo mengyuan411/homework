@@ -98,28 +98,53 @@ class  Renren(threading.Thread):
             print 'Get',req
             r=self.opener.open(req)
             data=r.read()
-            f=re.findall('<a id="addFriend(\d{5,15})"',data)
-            friends=friends+f
-            count=count+1
-            if f == []:
-                             return friends
+            pattern = '<a href="http://www\.renren\.com/profile\.do\?id=(\d+)">(.{2,12})</a><span class='
+            m = re.findall(pattern, data)
+            print m
+            if len(m) == 0:
+                  break#不存在
+            for i in range(0, len(m)):
+                friends=friends+m[i][0]
+                userid = m[i][0]
+                uname = m[i][1]
+                try:
+                    print u"账户："+userid+u"     姓名："+unicode(uname,'utf-8')
+                except:
+                    print u"账户："+userid+u"     姓名：",
+                    print uname,
+                    print " "
+            count+=1
+            if f==[]:
+                      return friends
 #获取个人好友列表
     def getmyfriends(self):
         friends = []
         count=0
-        
         while True:
             count1 = str(count)
             req="http://friend.renren.com/GetFriendList.do?curpage="+count1+'&id='+str(myid)
             print 'Get',req
             r=self.opener.open(req)
             data=r.read()
-            f=re.findall('Poke.do\?id=(\d{5,15})" oncl',data)
-            print f
-            friends=friends+f
-            count=count+1
-            if f == []:
-                return friends
+            pattern = '<a href="http://www\.renren\.com/profile\.do\?id=(\d+)">(.{2,12})</a><span class='
+            m = re.findall(pattern, data)
+            print m
+            if len(m) == 0:
+                  break#不存在
+            for i in range(0, len(m)):
+                friends=friends+m[i][0]
+                userid = m[i][0]
+                uname = m[i][1]
+                try:
+                    print u"账户："+userid+u"     姓名："+unicode(uname,'utf-8')
+                except:
+                    print u"账户："+userid+u"     姓名：",
+                    print uname,
+                    print " "
+            count+=1
+            if f==[]:
+                       return friends
+       
 #找到要获取好友列表的id
     def getone(self):
         if self.todolist==[]:
@@ -137,7 +162,3 @@ if __name__ == "__main__":
     a.friends()
     a.realrun()
     
-
-     
-  
-      
