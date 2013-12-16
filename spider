@@ -3,9 +3,9 @@
 
 import urllib, urllib2, cookielib, re, sys, threading
 
-myemail = '574266647@qq.com'
-mypassword = '415rc8t1tlms123'
-myid = '541823308'
+myemail = ''
+mypassword = ''
+myid = ''
 
 class  Renren(threading.Thread):
 
@@ -38,11 +38,11 @@ class  Renren(threading.Thread):
         print "friends list"
         print f,len(f)
 
-        #todo
+       
         self.todolist=f     
         self.donelist=[]
 
-        #write data
+       
         fdata=open('data00.txt','w')
         for item in f:
             fdata.write(item+' ')
